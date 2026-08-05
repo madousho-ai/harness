@@ -1,0 +1,72 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "ast-grep": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "--from",
+        "git+https://github.com/ast-grep/ast-grep-mcp",
+        "--with",
+        "mcp[cli]>=1.6,<2",
+        "ast-grep-server"
+      ],
+      "enabled": true,
+      "timeout": 120000
+    },
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "enabled": true
+    },
+    "grep_app": {
+      "type": "remote",
+      "url": "https://mcp.grep.app",
+      "enabled": true
+    },
+    "codegraph": {
+      "type": "local",
+      "command": [
+        "codegraph",
+        "serve",
+        "--mcp"
+      ],
+      "enabled": true
+    },
+    "scrapling": {
+      "type": "local",
+      "command": [
+        "podman",
+        "run",
+        "-i",
+        "--rm",
+        "ghcr.io/d4vinci/scrapling:latest",
+        "mcp"
+      ],
+      "enabled": false,
+      "timeout": 60000
+    },
+    "searxng": {
+      "type": "local",
+      "command": [
+        "podman",
+        "run",
+        "-i",
+        "--rm",
+        "--network",
+        "searxng_default",
+        "-e",
+        "SEARXNG_URL",
+        "-e",
+        "SEARXNG_MAX_RESULTS",
+        "docker.io/isokoliuk/mcp-searxng:latest"
+      ],
+      "environment": {
+        "SEARXNG_URL": "http://searxng:8080",
+        "SEARXNG_MAX_RESULTS": "10"
+      },
+      "enabled": false,
+      "timeout": 60000
+    }
+  }
+}
