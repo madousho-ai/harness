@@ -75,6 +75,12 @@ npx skills add https://github.com/code-yeongyu/oh-my-openagent/tree/dev/packages
   -g -a opencode --skill ast-grep --skill init-deep --skill git-master
 ```
 
+**[i-have-adhd](https://github.com/ayghri/i-have-adhd)** —— 约束输出形式：结论前置、步骤编号、去掉客套话
+
+```
+npx skills add ayghri/i-have-adhd -g -a opencode --skill i-have-adhd
+```
+
 装完用 `npx skills list` 查看，`npx skills update` 更新。
 
 ## Plugin
