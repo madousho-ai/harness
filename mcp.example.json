@@ -33,6 +33,14 @@
       ],
       "enabled": true
     },
+    "cocoindex-code": {
+      "type": "local",
+      "command": [
+        "ccc",
+        "mcp"
+      ],
+      "enabled": false
+    },
     "scrapling": {
       "type": "local",
       "command": [
