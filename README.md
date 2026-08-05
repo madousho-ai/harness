@@ -31,6 +31,16 @@
 
 ## Skills
 
+### [plan-weaver](./skills/plan-weaver/SKILL.md)
+
+核心组件，本仓库自带，承担 SDD 阶段的需求收集。
+
+```
+npx skills add madousho-ai/harness -g -a opencode --skill plan-weaver
+```
+
+把一次 dump 收束成 `docs/madousho/{YYYYMMDD}-{topic}/spec.md`：原话先原样落进 `## dump`，讨论收束后再补齐其余各节，其中 `## 决策记录` 按时间顺序记录决策与变更。同目录的 `arch.md` 归 IDD 阶段，本 skill 不碰，也不会自动往下调用 speckit。
+
 ### [spec-kit](https://github.com/github/spec-kit)
 
 主 SDD 工具，整个安装。
