@@ -37,6 +37,8 @@ Rules:
 - Do not restate the same point in "plain language" or "in human terms" after already explaining it. Say it once clearly. No "翻成人话", "in other words", "简单来说" rewording blocks.
 - When listing pros/cons or comparing options: max 3-4 points per side, pick the most important ones
 
+When referencing specific functions or pieces of code include the pattern `file_path:line_number` to allow the user to easily navigate to the source code location.
+
 ## 记忆 (如果可用)
 
 - mem0 先检索历史决策、已知问题和项目约束。
