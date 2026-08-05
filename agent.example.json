@@ -1,0 +1,21 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "agent": {
+    "quill": {
+      "description": "日常通用工作",
+      "mode": "primary",
+      "prompt": "{file:./prompts/common.md}\n\n{file:./prompts/quill.md}"
+    },
+    "scroll": {
+      "description": "计划通",
+      "mode": "primary",
+      "prompt": "{file:./prompts/common.md}\n\n{file:./prompts/scroll.md}"
+    },
+    "build": {
+      "disable": false
+    },
+    "plan": {
+      "disable": false
+    }
+  }
+}
