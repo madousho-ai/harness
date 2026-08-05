@@ -71,4 +71,22 @@
 
 ---
 
-阶段 3 与阶段 4 已有成熟工具承担，方法论不另行定义。当前使用 speckit 与 openspec 的 explore。
+## 执行流程
+
+上述阶段在 scroll agent 中串成一条流程，各由具体工具承担。
+
+| 阶段 | 承担者 | 产出 |
+| --- | --- | --- |
+| 1. SDD | plan-weaver skill | `docs/madousho/{YYYYMMDD}-{topic}/spec.md` |
+| 2. IDD | plan-arch skill，内含 openspec-explore | 同目录 `arch.md` |
+| 2.5 ADD（可选） | plan-arch skill 内下钻 | 并入 `arch.md` |
+| 3. plan | `speckit.specify` → `speckit.plan` → `speckit.analyze`，之后人工 review | speckit 自己的 spec / plan / task |
+| 4. 实现 | `speckit.implement`，完成后总 review | 代码 |
+
+plan-arch 阶段顺带运行 openspec-explore，粗略对齐代码库现状。
+
+`docs/madousho/` 下的两份文档是原始决策，是我和 AI 对齐出来的结论本身。speckit 的 spec / plan / task 是它们的下游产物。
+
+进入阶段 3 时不必重新描述需求，但要显式读 `spec.md` 与 `arch.md`，不要依赖对话上下文。走到这一步时前两个阶段的长讨论很可能已被自动压缩过，压缩保结论、丢细节，而细节正是生成 spec 需要的。文档才是这套方法论的载体，上下文只是缓存。
+
+阶段 3 与阶段 4 已有成熟工具承担，方法论不另行定义。
