@@ -58,15 +58,20 @@
 
 ## Skills
 
-### [plan-weaver](./skills/plan-weaver/SKILL.md)
+### [plan-weaver](./skills/plan-weaver/SKILL.md) 与 [plan-arch](./skills/plan-arch/SKILL.md)
 
-核心组件，本仓库自带，承担 SDD 阶段的需求收集。
+核心组件，本仓库自带，覆盖 SDD 与 IDD 两个阶段，一条命令装完。
 
 ```
-npx skills add madousho-ai/harness -g -a opencode --skill plan-weaver
+npx skills add madousho-ai/harness -g -a opencode \
+  --skill plan-weaver --skill plan-arch
 ```
 
-把一次 dump 收束成 `docs/madousho/{YYYYMMDD}-{topic}/spec.md`：原话先原样落进 `## dump`，讨论收束后再补齐其余各节，其中 `## 决策记录` 按时间顺序记录决策与变更。同目录的 `arch.md` 归 IDD 阶段，本 skill 不碰，也不会自动往下调用 speckit。
+**plan-weaver** 收需求。把一次 dump 收束成 `docs/madousho/{YYYYMMDD}-{topic}/spec.md`：原话先原样落进 `## dump`，讨论收束后再补齐其余各节。
+
+**plan-arch** 定架构。读 `spec.md` 与代码库现状，逐项收敛模块划分、模块职责、公开接口、模块间互动、数据流、业务流程六个问题，写进同目录的 `arch.md`。精度停在大体运作逻辑，只有用户点名担心的地方才下钻到实现细节，落进 `## 下钻`。
+
+两份文档的 `## 决策记录` 都按时间顺序追加，`定了` 要连依据来源一起写 —— 架构决策的依据比结论更容易蒸发，而它是三个月后判断这个决定是否还成立的唯一凭据。两个 skill 都在写完自己那份文档后停下，不会自动往下调用 speckit。
 
 ### [spec-kit](https://github.com/github/spec-kit)
 
