@@ -123,6 +123,12 @@ npx skills add https://github.com/code-yeongyu/oh-my-openagent/tree/dev/packages
 npx skills add ayghri/i-have-adhd -g -a opencode --skill i-have-adhd
 ```
 
+**[cocoindex-code](https://github.com/cocoindex-io/cocoindex-code)**（可选）—— 配套同名 MCP 的检索用法，装了那个 MCP 才有意义
+
+```
+npx skills add cocoindex-io/cocoindex-code -g -a opencode
+```
+
 装完用 `npx skills list` 查看，`npx skills update` 更新。
 
 ## Plugin
