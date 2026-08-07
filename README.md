@@ -67,7 +67,7 @@ npx skills add madousho-ai/harness -g -a opencode \
   --skill plan-weaver --skill plan-arch
 ```
 
-**plan-weaver** 收需求。把一次 dump 收束成 `docs/madousho/{YYYYMMDD}-{topic}/spec.md`：原话先原样落进 `## dump`，讨论收束后再补齐其余各节。
+**plan-weaver** 收需求。把一次 dump 收束成 `docs/madousho/{YYYYMMDD}-{topic}/spec.md`：原话先原样落进 `## dump`，接着从中划分出几个 topic，之后边谈边写 —— 每轮回复产生的新信息当场落进对应的节。
 
 **plan-arch** 定架构。读 `spec.md` 与代码库现状，逐项收敛模块划分、模块职责、公开接口、模块间互动、数据流、业务流程六个问题，写进同目录的 `arch.md`。精度停在大体运作逻辑，只有用户点名担心的地方才下钻到实现细节，落进 `## 下钻`。
 
