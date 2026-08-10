@@ -158,3 +158,14 @@ git clone https://github.com/madousho-ai/mem0-opencode-fork.git
 - `MEM0_API_BASE_URL` —— **必需**，例如 `http://localhost:8888`。必须是根地址，不带 `/v1/` 后缀。未设置时插件不会注册任何记忆工具。
 - `MEM0_API_KEY` —— 仅当 server 未以 `AUTH_DISABLED=true` 启动时需要。
 
+## 试用工具
+
+还在试的东西，尚未确定纳入日常流程。
+
+**[no-mistakes](https://github.com/kunchenguid/no-mistakes)** —— 推送前的验证门禁，`git push no-mistakes` 跑完流水线才转发到真实 remote 并开 PR
+
+```
+curl -fsSL https://raw.githubusercontent.com/kunchenguid/no-mistakes/main/docs/install.sh | sh
+no-mistakes init
+```
+
