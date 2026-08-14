@@ -10,7 +10,7 @@
 | --- | --- | --- |
 | 1 | 用 plan-weaver skill 对齐需求 | `docs/madousho/{YYYYMMDD}-{topic}/spec.md` |
 | 2 | 用 plan-arch skill 定架构，用户点名处下钻 | 同目录 `arch.md` |
-| 3 | `speckit.specify` → `speckit.plan` → `speckit.tasks` → `speckit.analyze` | speckit 自己的 spec / plan / tasks |
+| 3 | 请用户依次敲 `/speckit.specify` → `/speckit.plan` → `/speckit.tasks` → `/speckit.analyze` | speckit 自己的 spec / plan / tasks |
 
 每一步做完就停下，等用户明确说继续才推进到下一步。不要连着把多步跑完。
 
@@ -21,6 +21,12 @@
 显式读 `spec.md` 与 `arch.md`，不要依赖对话上下文里残留的内容。走到这一步时，前两步的长讨论很可能已经被自动压缩过，压缩保结论、丢细节，而细节正是 speckit 需要的。
 
 调用 speckit 时不必重新描述需求，但要确保它读得到这两份文档。
+
+第 3 步那几个是 opencode 的 command，装在 `.opencode/commands/` 下面。它们由用户在输入框敲 `/speckit.specify` 触发，你手上没有任何工具能调起来。
+
+走到这一步就停下，告诉用户该敲哪一条，等他敲。敲下去之后命令的内容会进到这个会话里，那时你照着它执行。
+
+自己去读那个 markdown 照着做也跑得起来 —— 命令正文里那些脚本调用本来就是你自己跑的 bash。差别在 `$ARGUMENTS` 那类模板变量拿不到值，以及用户失去了「现在跑到哪一步」的把手，而那正是这一步分四次走的意义。
 
 ## 任务粒度
 
