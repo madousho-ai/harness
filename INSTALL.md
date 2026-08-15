@@ -144,24 +144,24 @@ npx skills add cocoindex-io/cocoindex-code -g -a opencode
 | quill | 日常简单改动、日常事务、执行已经写好的 plan |
 | scroll | 走 SDD → IDD → ADD，产出 spec.md 和 arch.md |
 
-装的话，往用户 config 的 `agent` 字段加：
+装的话，往用户 config 的 `agent` 字段加。提示词由 `agent-prompts/parts/` 下的组件拼成，两个 agent 拼的组件相同，只有最后一块不一样：
 
 ```json
 "quill": {
   "description": "日常通用工作",
   "mode": "primary",
-  "prompt": "{file:./harness/agent-prompts/common.md}\n\n{file:./harness/agent-prompts/quill.md}"
+  "prompt": "{file:./harness/agent-prompts/parts/house-rules.md}\n\n{file:./harness/agent-prompts/parts/voice.md}\n\n{file:./harness/agent-prompts/parts/concerns.md}\n\n{file:./harness/agent-prompts/parts/tools.md}\n\n{file:./harness/agent-prompts/parts/recall.md}\n\n{file:./harness/agent-prompts/parts/subagent.md}\n\n{file:./harness/agent-prompts/parts/git-commit.md}\n\n{file:./harness/agent-prompts/quill.md}"
 },
 "scroll": {
   "description": "计划通",
   "mode": "primary",
-  "prompt": "{file:./harness/agent-prompts/common.md}\n\n{file:./harness/agent-prompts/scroll.md}"
+  "prompt": "{file:./harness/agent-prompts/parts/house-rules.md}\n\n{file:./harness/agent-prompts/parts/voice.md}\n\n{file:./harness/agent-prompts/parts/concerns.md}\n\n{file:./harness/agent-prompts/parts/tools.md}\n\n{file:./harness/agent-prompts/parts/recall.md}\n\n{file:./harness/agent-prompts/parts/subagent.md}\n\n{file:./harness/agent-prompts/parts/git-commit.md}\n\n{file:./harness/agent-prompts/scroll.md}"
 }
 ```
 
 路径带 `harness/` 前缀，对应步骤 0 的 clone 位置。仓库里的 `agent.example.json` 是仓库自用版本，路径少了这层前缀，别直接抄。
 
-装之前把这件事告诉用户：**设了 `prompt` 会完全跳过 opencode 内置的 provider prompt**，是替换不是追加。内置那份里的工具使用政策、todo 规范、代码引用格式会一起消失，harness 的 `common.md` 已经把需要的部分写回来了。环境信息、skills 列表、AGENTS.md 不受影响。
+装之前把这件事告诉用户：**设了 `prompt` 会完全跳过 opencode 内置的 provider prompt**，是替换不是追加。内置那份里的工具使用政策、todo 规范、代码引用格式会一起消失，harness 的 `parts/` 组件已经把需要的部分写回来了。环境信息、skills 列表、AGENTS.md 不受影响。
 
 然后问要不要禁用内置的 build 和 plan：
 

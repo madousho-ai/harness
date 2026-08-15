@@ -5,12 +5,12 @@
     "quill": {
       "description": "日常通用工作",
       "mode": "primary",
-      "prompt": "{file:./agent-prompts/common.md}\n\n{file:./agent-prompts/quill.md}"
+      "prompt": "{file:./agent-prompts/parts/house-rules.md}\n\n{file:./agent-prompts/parts/voice.md}\n\n{file:./agent-prompts/parts/concerns.md}\n\n{file:./agent-prompts/parts/tools.md}\n\n{file:./agent-prompts/parts/recall.md}\n\n{file:./agent-prompts/parts/subagent.md}\n\n{file:./agent-prompts/parts/git-commit.md}\n\n{file:./agent-prompts/quill.md}"
     },
     "scroll": {
       "description": "计划通",
       "mode": "primary",
-      "prompt": "{file:./agent-prompts/common.md}\n\n{file:./agent-prompts/scroll.md}"
+      "prompt": "{file:./agent-prompts/parts/house-rules.md}\n\n{file:./agent-prompts/parts/voice.md}\n\n{file:./agent-prompts/parts/concerns.md}\n\n{file:./agent-prompts/parts/tools.md}\n\n{file:./agent-prompts/parts/recall.md}\n\n{file:./agent-prompts/parts/subagent.md}\n\n{file:./agent-prompts/parts/git-commit.md}\n\n{file:./agent-prompts/scroll.md}"
     },
     "wave-supervisor": {
       "description": "madousho-waves 波次主管，仅供 /speckit.implement-waves 使用：接一个波次号，跑「实现 → 验证 → 修补」直到通过或认输，自己不写代码不做验证。协议在 .specify/extensions/madousho-waves/prompts/wave-supervisor.md，由调用者指定。",

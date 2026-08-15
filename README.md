@@ -11,15 +11,27 @@
 | quill | 日常简单改动、日常事务、执行 plan |
 | scroll | 走 SDD → IDD → ADD，产出 plan |
 
-提示词由 `common.md` 与各自的部分拼成：
+提示词由 `agent-prompts/parts/` 下的组件与各自的部分拼成：
+
+| 组件 | 内容 |
+| --- | --- |
+| `house-rules.md` | URL、装包确认、禁 Co-Authored-By |
+| `voice.md` | 语气、讲代码的方式、语言规则 |
+| `concerns.md` | 自己发现的疑虑先问再写 |
+| `tools.md` | 代码探索、写文件、改代码之前 |
+| `recall.md` | 记忆 |
+| `subagent.md` | 什么时候开 subagent |
+| `git-commit.md` | 提交粒度、staging、message |
 
 ```json
-"prompt": "{file:./agent-prompts/common.md}\n\n{file:./agent-prompts/quill.md}"
+"prompt": "{file:./agent-prompts/parts/house-rules.md}\n\n{file:./agent-prompts/parts/voice.md}\n\n…\n\n{file:./agent-prompts/quill.md}"
 ```
 
-`{file:}` 的路径相对 config 文件所在目录，一个 prompt 里可以拼多个文件。markdown 形式的 agent（`.opencode/agent/<name>.md`）做不到这件事 —— 它的 body 不做插值，`{file:...}` 会原样留在提示词里。所以要共享 common，agent 只能用 JSON 形式定义。
+拼哪几块由角色决定，完整拼法见 [agent.example.json](./agent.example.json)。
 
-**设了 `prompt` 就会完全跳过 opencode 内置的 provider prompt**，这是替换而非追加。内置那份里的工具使用政策、TodoWrite 规范、代码引用格式会一起消失，需要哪条就得自己在 `common.md` 里写回来。环境信息、skills 列表、AGENTS.md 不受影响，始终保留。
+`{file:}` 的路径相对 config 文件所在目录，一个 prompt 里可以拼多个文件。markdown 形式的 agent（`.opencode/agent/<name>.md`）做不到这件事 —— 它的 body 不做插值，`{file:...}` 会原样留在提示词里。所以要共享组件，agent 只能用 JSON 形式定义。
+
+**设了 `prompt` 就会完全跳过 opencode 内置的 provider prompt**，这是替换而非追加。内置那份里的工具使用政策、TodoWrite 规范、代码引用格式会一起消失，需要哪条就得自己在 `parts/` 的组件里写回来。环境信息、skills 列表、AGENTS.md 不受影响，始终保留。
 
 内置的 build 与 plan 可选禁用：
 
