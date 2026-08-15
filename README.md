@@ -4,7 +4,7 @@
 
 ## Agent
 
-两个 primary agent，配置见 [agent.example.json](./agent.example.json)，提示词在 [prompts/](./prompts/)。
+两个 primary agent，配置见 [agent.example.json](./agent.example.json)，提示词在 [agent-prompts/](./agent-prompts/)。
 
 | agent | 定位 |
 | --- | --- |
@@ -14,7 +14,7 @@
 提示词由 `common.md` 与各自的部分拼成：
 
 ```json
-"prompt": "{file:./prompts/common.md}\n\n{file:./prompts/quill.md}"
+"prompt": "{file:./agent-prompts/common.md}\n\n{file:./agent-prompts/quill.md}"
 ```
 
 `{file:}` 的路径相对 config 文件所在目录，一个 prompt 里可以拼多个文件。markdown 形式的 agent（`.opencode/agent/<name>.md`）做不到这件事 —— 它的 body 不做插值，`{file:...}` 会原样留在提示词里。所以要共享 common，agent 只能用 JSON 形式定义。
@@ -86,12 +86,12 @@ specify init <project> --integration <agent>
 
 ## Spec Kit 扩展
 
-### [madousho-waves](./extensions/madousho-waves/README.md)
+### [madousho-waves](./speckit-extensions/madousho-waves/README.md)
 
 本仓库自带的 spec kit 扩展，替换实现阶段的跑法。
 
 ```
-specify extension add --dev <本仓库>/extensions/madousho-waves
+specify extension add --dev <本仓库>/speckit-extensions/madousho-waves
 ```
 
 装完得到 `/speckit.implement-waves`。

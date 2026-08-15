@@ -150,12 +150,12 @@ npx skills add cocoindex-io/cocoindex-code -g -a opencode
 "quill": {
   "description": "日常通用工作",
   "mode": "primary",
-  "prompt": "{file:./harness/prompts/common.md}\n\n{file:./harness/prompts/quill.md}"
+  "prompt": "{file:./harness/agent-prompts/common.md}\n\n{file:./harness/agent-prompts/quill.md}"
 },
 "scroll": {
   "description": "计划通",
   "mode": "primary",
-  "prompt": "{file:./harness/prompts/common.md}\n\n{file:./harness/prompts/scroll.md}"
+  "prompt": "{file:./harness/agent-prompts/common.md}\n\n{file:./harness/agent-prompts/scroll.md}"
 }
 ```
 
