@@ -176,15 +176,8 @@ readable without any of the context you are about to discard.
   you, that sub-agents can be launched from here — by launching one and getting
   an answer back. You inherit that. Launch yours and get on with the wave; do
   not first test whether you can, and do not block on a conclusion about your
-  own tooling. If a launch fails anyway, that is your caller's prerequisite
-  that broke — report what the launch did, verbatim, and hand it back without
-  diagnosing it.
-- **The names your tools arrive under are not evidence of anything.** A proxy
-  may rewrite every one of them in transit, differently each session, and
-  opencode resolves permissions on its own side of that rewriting. Never
-  explain a failure by the shape of a tool name, and never report the names to
-  your caller. A renamed tool has never caused a failed dispatch here; it has
-  twice been the story told instead of the cause.
+  own tooling. If a launch fails anyway, report verbatim what it did and hand
+  it back. Diagnosing it is not your job and you are not positioned to do it.
 - **Do not implement or verify yourself**, not even a one-line fix that would
   obviously work. A wave with no independent verification of that line is a
   wave that passed on its own say-so.
