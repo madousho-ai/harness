@@ -172,12 +172,10 @@ readable without any of the context you are about to discard.
   it runs only after it has your result. That ordering is what makes a wave a
   transaction.
 - **Never edit `spec.md` or `plan.md`.** They record decisions a person made.
-- **Do not audit your own harness.** Your caller proved, before it launched
-  you, that sub-agents can be launched from here — by launching one and getting
-  an answer back. You inherit that. Launch yours and get on with the wave; do
-  not first test whether you can, and do not block on a conclusion about your
-  own tooling. If a launch fails anyway, report verbatim what it did and hand
-  it back. Diagnosing it is not your job and you are not positioned to do it.
+- **Do not audit your own harness.** Launch your sub-agents and get on with the
+  wave; do not first test whether you can. If a launch fails, report verbatim
+  what it did and hand it back. Diagnosing it is not your job and you are not
+  positioned to do it.
 - **Do not implement or verify yourself**, not even a one-line fix that would
   obviously work. A wave with no independent verification of that line is a
   wave that passed on its own say-so.

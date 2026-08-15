@@ -34,27 +34,6 @@ python3 .specify/extensions/madousho-waves/scripts/python/waves.py <subcommand>
 
 Exit code 2 means refused. Treat a refusal as authoritative.
 
-## Prerequisite — nested sub-agents
-
-This command needs an agent that can launch sub-agents **two levels deep**: you
-launch a sub-supervisor, and it launches an implementer and a verifier.
-
-Establish it by doing it. Launch `wave-supervisor` by name, giving it this and
-nothing else:
-
-> Launch a `wave-implement` sub-agent whose entire instruction is to reply with
-> the single word `PONG`, and report back what it returned. Do nothing else.
-
-`PONG` back and you are set — go to Step 0. It costs no wave round, since
-nothing has started yet.
-
-Anything else means stop. Show the user verbatim what came back, and name the
-two things that shut this down: `subagent_depth` below `2`, or the
-`wave-supervisor` definition's `task` grant. The extension's README has the
-detail on both. Do not diagnose it further yourself, and do not fall back to
-running the waves yourself — a silent fallback looks like it worked while
-delivering none of the isolation this command exists for.
-
 ---
 
 ## Step 0 — Orient
@@ -87,8 +66,8 @@ Otherwise keep the `base_sha` it prints — the sub-supervisor needs it.
 
 ## Step 2 — Hand the wave to a sub-supervisor
 
-Launch the agent you identified in Gate 2, by name, with a fresh context. Give
-it exactly four things:
+Launch `wave-supervisor` by name, with a fresh context. Give it exactly four
+things:
 
 - Its instructions: read
   `.specify/extensions/madousho-waves/prompts/wave-supervisor.md` and follow it.
@@ -103,6 +82,13 @@ earlier waves, do not pass along reports from previous waves. It reads its own
 instructions, fetches its own assignment, and reads the repository as it stands.
 
 Wait for it to finish.
+
+If the launch itself fails — no such agent, or the call errors — that is the
+run over. Show the user the failure verbatim and stop. Do not diagnose it, and
+do not fall back to running the wave yourself; a silent fallback looks like it
+worked while delivering none of the isolation this command exists for. Three
+layers of dispatch have to work for this command to mean anything, and the
+first launch is where you find out.
 
 ## Step 3 — Commit the outcome
 
