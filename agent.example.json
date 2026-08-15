@@ -33,15 +33,12 @@
       }
     },
     "wave-verify": {
-      "description": "madousho-waves 验证轮，仅供 /speckit.implement-waves 使用：只读，独立判定一个波次是否达标。协议在 .specify/extensions/madousho-waves/prompts/wave-verify.md，由调用者指定。",
+      "description": "madousho-waves 验证轮，仅供 /speckit.implement-waves 使用：独立判定一个波次是否达标，仓库只读，变异在副本里做。协议在 .specify/extensions/madousho-waves/prompts/wave-verify.md，由调用者指定。",
       "mode": "subagent",
       "prompt": "{file:./agent-prompts/parts/house-rules.md}\n\n{file:./agent-prompts/parts/voice.md}\n\n{file:./agent-prompts/parts/tools.md}\n\n{file:./agent-prompts/parts/skills.md}\n\n{file:./agent-prompts/parts/git-commit.md}",
       "permission": {
         "*": "allow",
         "external_directory": "allow",
-        "edit": "deny",
-        "write": "deny",
-        "patch": "deny",
         "task": "deny"
       }
     },

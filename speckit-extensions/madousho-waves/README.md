@@ -78,7 +78,7 @@
 | L1 主编排器 | 你自己的 primary agent | 无需改动 | `commands/implement.md` |
 | L2 子编排器 | `wave-supervisor` | 授予 `task`，拼项目规矩 | `prompts/wave-supervisor.md` |
 | L3 实现者 | `wave-implement` | 写权限（与默认相同），拼项目规矩 | `prompts/wave-implement.md` |
-| L3 验证者 | `wave-verify` | **禁写**，拼项目规矩 | `prompts/wave-verify.md` |
+| L3 验证者 | `wave-verify` | 写权限（与默认相同），拼项目规矩 | `prompts/wave-verify.md` |
 
 角色协议整份住在扩展的 `prompts/` 下，调用者在派人时把文件路径递过去。把协议搬进 agent 定义会让扩展只发得出半份 —— 装的人拿到一堆命令却没有行为规范。
 
@@ -86,23 +86,31 @@
 
 `description` 是要认真写的字段：它是上一层挑人时唯一的判据（见下一节）。
 
-### 验证者为什么必须是专用 agent
+### 验证者为什么需要写权限
 
-其余三个用通用 agent 也能跑，验证者不行 —— 它与实现者的差别是一项真实的能力差别。
+验证者与实现者的差别是「不许改仓库」，而这道约束**只在提示词里**，权限层不设闸。
 
-只读性若只靠提示词里的边界条款撑着，那么验证者查出一个一行的缺陷、顺手改掉、再判 PASS，这条路是通的，而且报告读起来完全正常。独立性是这一层存在的唯一理由，它一旦动手，接下来验的东西里就有一部分是自己写的，没有任何机制会发现。
+看起来该压到权限层，试过一版：`edit` / `write` / `patch` 全 deny。它拦掉的东西比它保护的多。
 
-把它压到权限层：
+这一层最有力的手段是变异测试 —— 把实现改坏，看那条声称在守它的测试翻不翻红。读代码回答不了这个问题：一条什么都没断言的测试，和一条断言了全部的测试，在源码上长得一样，直到你从它底下抽掉点东西。W3 那次靠 11 个变异测出「渲染那一半完全没有自动化测试保护」，那是整份报告里信息量最大的一条，读代码读不出来。
+
+而 opencode 把 `edit` / `write` / `apply_patch` 三个工具挂在同一个 `edit` 权限下，禁掉是全局的，`/tmp` 也一起禁 —— 变异连个落脚的副本都建不了。被 deny 的工具还不出现在工具清单里，于是 agent 看到的是「我没有写文件的能力」，叠上提示词里那句「Change nothing」，它会得出「不该碰任何文件」，直接放弃变异。
+
+`bash` 无论如何都改得了文件，那道闸本来也封不死。留着它，付出的是最有力的验证手段；拆掉它，失去的是一条本来就漏的防线。
+
+所以现在这样：
 
 ```jsonc
 "wave-verify": {
-  "description": "madousho-waves 验证轮，仅供 /speckit.implement-waves 使用：只读，独立判定一个波次是否达标",
+  "description": "madousho-waves 验证轮，仅供 /speckit.implement-waves 使用：独立判定一个波次是否达标，仓库只读，变异在副本里做",
   "mode": "subagent",
-  "permission": { "edit": "deny", "write": "deny", "patch": "deny", "task": "deny" }
+  "permission": { "task": "deny" }
 }
 ```
 
-一处诚实的边界：`bash` 仍然能改文件，封不死。禁掉 `edit`/`write`/`patch` 拿掉的是顺手那条路，剩下的仍靠提示词。
+约束改由 [`prompts/wave-verify.md`](./prompts/wave-verify.md) 的 Boundaries 承担，它明说能力在手、是故意给的，逐条列出不许碰什么（文件、索引、历史，以及够得到它们的命令），要求变异在仓库外的副本里做，并且收工前用 `git status` 与 `git log -1` 自证仓库没动、把两者写进报告。
+
+代价照实说：验证者现在**改得动仓库**，拦它的只有提示词。换来的是它真的能验。
 
 ### 每一层只派得动下一层
 

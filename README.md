@@ -121,7 +121,7 @@ specify extension add --dev <本仓库>/speckit-extensions/madousho-waves
 { "subagent_depth": 2 }
 ```
 
-还要有 `wave-supervisor` / `wave-implement` / `wave-verify` 三个 subagent —— 见 [`agent.example.json`](./agent.example.json)。验证者在那里被禁掉写权限，它的独立性因此是结构性的而非只靠提示词。
+还要有 `wave-supervisor` / `wave-implement` / `wave-verify` 三个 subagent —— 见 [`agent.example.json`](./agent.example.json)。验证者拿的是完整写权限：它最有力的手段是变异测试，把实现改坏看测试翻不翻红，而那需要一个能落脚的副本。「不许改仓库」由它的协议承担，理由见扩展自己的 README。
 
 **扩展只装流程，规矩走 agent 提示词。** 扩展里那三份协议写的是波次怎么调度、报告长什么样、越过哪条线波次作废。怎么提交、先想到哪个工具、什么时候加载 skill，由那三个 subagent 的 `prompt` 提供，跟 quill、scroll 拼自同一批 [`parts/`](./agent-prompts/) 组件。扩展装进任意项目的 `.specify/` 下，够不到这个仓库的文件，写进扩展就只能是第二份副本 —— 那是它以前的样子，而副本会漂移。
 
