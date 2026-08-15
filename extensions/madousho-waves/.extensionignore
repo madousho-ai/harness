@@ -1,0 +1,10 @@
+# Development-only files. Everything listed here stays out of the copy that
+# `specify extension add` installs into a project.
+#
+# Note: excluding a directory outright means a later `!` cannot re-include
+# anything inside it — the installer never recurses into a skipped directory.
+
+tests/
+dev-install.sh
+__pycache__/
+*.pyc

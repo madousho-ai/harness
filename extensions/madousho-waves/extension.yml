@@ -1,0 +1,35 @@
+schema_version: "1.0"
+
+extension:
+  id: "madousho-waves"
+  name: "Madousho Waves"
+  version: "0.1.0"
+  description: "Run the implementation phase wave by wave, each wave in its own context, with an independent verifier"
+  author: "madousho"
+  repository: "https://github.com/madousho-ai/harness"
+  license: "MIT"
+
+requires:
+  speckit_version: ">=0.16.0"
+  commands:
+    - "speckit.tasks"
+  tools:
+    - name: "git"
+      required: false
+
+provides:
+  commands:
+    # The canonical name has to be speckit.{extension-id}.{command}. The alias
+    # is free-form, and both are registered as command files, so the command
+    # people actually type is /speckit.implement-waves.
+    - name: "speckit.madousho-waves.implement"
+      file: "commands/implement.md"
+      description: "Implement tasks.md wave by wave: one phase per isolated context, implement and verify as separate agents"
+      aliases:
+        - "speckit.implement-waves"
+
+tags:
+  - "implementation"
+  - "orchestration"
+  - "context"
+  - "verification"
