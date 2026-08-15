@@ -43,61 +43,80 @@ Checking this is your job and yours alone. The sub-supervisor assumes the
 capability and will not test for it, so anything you miss here surfaces as a
 wave that halts after doing no work.
 
-On opencode there are two separate gates and both must be open.
+**Establish it by doing it.** Launch the probe below and see whether `PONG`
+comes back. That single call settles the question, and nothing you can read
+settles it.
 
-**Gate 1 — depth ceiling.** Check the effective config for `subagent_depth`; if
-it is absent or `1`, **stop and tell the user** to add it to `opencode.json`
-(project) or `~/.config/opencode/opencode.jsonc` (global):
+### The probe
+
+Launch `wave-supervisor` by name, giving it this and nothing else:
+
+> CAPABILITY PROBE. There is no wave. Do not read any protocol file, do not run
+> `waves.py`, do not write anything, do not read the repository. Do exactly one
+> thing: launch a `wave-implement` sub-agent whose entire instruction is to
+> reply with the single word `PONG`. Report back either the word it returned,
+> or — if the launch itself failed — the verbatim failure. Do not list your
+> tools, do not describe them, do not diagnose anything, do not state which
+> layer you think you are.
+
+`PONG` means both gates are open; go to Step 0. It costs no wave round, because
+nothing has been started yet.
+
+Anything else means stop. Report to the user verbatim what came back, then the
+two candidate causes below.
+
+### The two things that shut a gate
+
+Both wear the same face — the sub-supervisor comes up with no launcher at all —
+and neither is visible in a config that reads as correct.
+
+**Depth.** `subagent_depth` absent or `1`. It goes in `opencode.json` (project)
+or `~/.config/opencode/opencode.jsonc` (global), and needs a restart:
 
 ```json
 { "subagent_depth": 2 }
 ```
 
-**Gate 2 — the sub-supervisor must be an agent that is granted `task`.** A
-subagent receives the `task` tool only if its own definition contains an entry
-whose key is literally `task`. A wildcard `"*": "allow"` does not satisfy this;
-the check is an exact match on the key, so an agent that looks fully permitted
-still gets `task` denied — and a denied tool is not even listed, so the
-sub-supervisor sees no launcher at all. The built-in `general` subagent has no
-such entry and therefore cannot be used for this role.
-
-The user needs one agent defined for it, and you must launch that agent **by
-name**:
+**The `task` grant.** A subagent receives the `task` tool only if its own
+definition holds an entry whose key is literally `task`; a wildcard
+`"*": "allow"` does not satisfy that, and the built-in `general` has no such
+entry. When `task` is given the object form, rules are evaluated in declaration
+order and **the last match wins**, so
 
 ```jsonc
-"wave-supervisor": {
-  "description": "madousho-waves wave sub-supervisor",
-  "mode": "subagent",
-  "permission": {
-    "*": "allow",
-    "task": "allow",      // required verbatim; "*" does not cover it
-    "todowrite": "allow"  // same rule, same code path
-  }
-}
+"task": { "wave-implement": "allow", "wave-verify": "allow", "*": "deny" }
 ```
 
-**If `task` is given the object form, the catch-all must come first.** Rules
-are evaluated in declaration order and the last match wins, so
-`{ "wave-implement": "allow", "wave-verify": "allow", "*": "deny" }` denies
-both of the agents it appears to permit — each one matches its own rule and
-then matches `*`, and `*` is last. A denied subagent is removed from the
-`task` tool description outright, so denying every candidate removes the tool
-itself, and the sub-supervisor reports having no launcher rather than having a
-restricted one. Written the other way round it behaves as intended:
+denies both agents it appears to permit — each matches its own rule, then
+matches `*`, and `*` is last. A denied subagent is dropped from the `task` tool
+description outright, so denying every candidate removes the tool itself. The
+catch-all goes first:
 
 ```jsonc
 "task": { "*": "deny", "wave-implement": "allow", "wave-verify": "allow" }
 ```
 
-Check the order, not just the presence of the key.
+Raise these **after** a probe has failed. Reading them first proves nothing:
+the second one reads as a correct, carefully narrowed permission right up until
+someone notices the order.
 
-Restart after either change. Denies on your own session are inherited by
-everything below you, so a tool you have denied stays denied for all three
-layers.
+### Tool names are not evidence
 
-If either gate is shut, stop and say which one. Do not fall back to running the
-waves yourself — a silent fallback looks like it worked while delivering none of
-the isolation this command exists for.
+The names your tools arrive under are not a fact about opencode. A proxy or
+gateway may rewrite every one of them in transit — `task` can reach you as
+`mcp__<word>__<word>_task` — and the rewriting can differ from session to
+session. Permission resolution happens on opencode's side of it and is
+unaffected.
+
+So do not conclude anything from the shape of a tool name, do not ask any layer
+below you to list its tools, and do not accept a name-shaped explanation in a
+blocker report. A renamed tool has never been the cause of a failed dispatch
+here. It has twice been the misdiagnosis, both times in a session where the
+real cause was the rule order above.
+
+If a gate is shut, stop and say so. Do not fall back to running the waves
+yourself — a silent fallback looks like it worked while delivering none of the
+isolation this command exists for.
 
 ---
 
