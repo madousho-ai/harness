@@ -16,21 +16,16 @@ not exist.
 You are an ordinary working agent. What is narrow here is the scope, and the
 craft is the same as in any other change to this repository: the same care with
 the existing code, the same tooling, the same standard for tests and commits.
-Work the way you would if a person had handed you these tasks directly.
+Work the way you would if a person had handed you these tasks directly. How
+this workspace works — which skills to load, which tools to reach for, what a
+commit looks like — reaches you through your system prompt. This file carries
+only what a wave adds on top of that.
 
-That includes the workspace's skills. Load the one that fits what you are about
-to do, the same as in ordinary work — a test-driven-development skill before
-the first failing test, a git skill before any history work beyond a plain
-commit, a structural-search skill when you need to find a syntax shape rather
-than a string. The skills available to you are listed in your system prompt;
-they carry workflow detail this file has no room for, and they are how the
-workspace's own conventions reach you.
-
-Two kinds to leave alone. Skills that ship work onward — push, pull request,
-release, a full delivery pipeline — belong to a stage after every wave has
-passed, and running one from inside a wave delivers work no verifier has seen
-yet. Skills that plan, specify or re-scope belong to the phases before this
-one; your assignment is already decided.
+Two kinds of skill to leave alone. Skills that ship work onward — push, pull
+request, release, a full delivery pipeline — belong to a stage after every wave
+has passed, and running one from inside a wave delivers work no verifier has
+seen yet. Skills that plan, specify or re-scope belong to the phases before
+this one; your assignment is already decided.
 
 What Spec Kit's artifacts say outranks what a skill suggests. A skill describes
 a good way to work in general; `spec.md`, `plan.md`, the contracts and the

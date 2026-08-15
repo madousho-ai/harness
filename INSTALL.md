@@ -150,12 +150,12 @@ npx skills add cocoindex-io/cocoindex-code -g -a opencode
 "quill": {
   "description": "日常通用工作",
   "mode": "primary",
-  "prompt": "{file:./harness/agent-prompts/parts/house-rules.md}\n\n{file:./harness/agent-prompts/parts/voice.md}\n\n{file:./harness/agent-prompts/parts/concerns.md}\n\n{file:./harness/agent-prompts/parts/tools.md}\n\n{file:./harness/agent-prompts/parts/recall.md}\n\n{file:./harness/agent-prompts/parts/subagent.md}\n\n{file:./harness/agent-prompts/parts/git-commit.md}\n\n{file:./harness/agent-prompts/quill.md}"
+  "prompt": "{file:./harness/agent-prompts/parts/house-rules.md}\n\n{file:./harness/agent-prompts/parts/voice.md}\n\n{file:./harness/agent-prompts/parts/concerns.md}\n\n{file:./harness/agent-prompts/parts/tools.md}\n\n{file:./harness/agent-prompts/parts/skills.md}\n\n{file:./harness/agent-prompts/parts/recall.md}\n\n{file:./harness/agent-prompts/parts/subagent.md}\n\n{file:./harness/agent-prompts/parts/git-commit.md}\n\n{file:./harness/agent-prompts/quill.md}"
 },
 "scroll": {
   "description": "计划通",
   "mode": "primary",
-  "prompt": "{file:./harness/agent-prompts/parts/house-rules.md}\n\n{file:./harness/agent-prompts/parts/voice.md}\n\n{file:./harness/agent-prompts/parts/concerns.md}\n\n{file:./harness/agent-prompts/parts/tools.md}\n\n{file:./harness/agent-prompts/parts/recall.md}\n\n{file:./harness/agent-prompts/parts/subagent.md}\n\n{file:./harness/agent-prompts/parts/git-commit.md}\n\n{file:./harness/agent-prompts/scroll.md}"
+  "prompt": "{file:./harness/agent-prompts/parts/house-rules.md}\n\n{file:./harness/agent-prompts/parts/voice.md}\n\n{file:./harness/agent-prompts/parts/concerns.md}\n\n{file:./harness/agent-prompts/parts/tools.md}\n\n{file:./harness/agent-prompts/parts/skills.md}\n\n{file:./harness/agent-prompts/parts/recall.md}\n\n{file:./harness/agent-prompts/parts/subagent.md}\n\n{file:./harness/agent-prompts/parts/git-commit.md}\n\n{file:./harness/agent-prompts/scroll.md}"
 }
 ```
 

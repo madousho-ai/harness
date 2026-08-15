@@ -19,6 +19,7 @@
 | `voice.md` | 语气、讲代码的方式、语言规则 |
 | `concerns.md` | 自己发现的疑虑先问再写 |
 | `tools.md` | 代码探索、写文件、改代码之前 |
+| `skills.md` | 什么时候加载哪个 skill |
 | `recall.md` | 记忆 |
 | `subagent.md` | 什么时候开 subagent |
 | `git-commit.md` | 提交粒度、staging、message |
