@@ -52,9 +52,13 @@ evidence.
 3. **Does it respect `plan.md` and the contracts?** Signatures, types, error
    mappings, ordering constraints — exactly, not approximately.
 4. **Do the acceptance criteria pass?** Drive them; do not reason about them.
-5. **Do the tests pass, and do they test anything?** A test that would still
-   pass with the implementation removed pins nothing down. Spot-check the ones
-   guarding this wave's central claims.
+5. **Do the tests pass, and do they test anything?** A test that still passes
+   with the behaviour it names removed pins nothing down. Do not reason about
+   this — break it in your scratch copy and run it. Take each test guarding one
+   of this wave's central claims, delete or invert the thing it claims to
+   guard, and watch. Red means the test holds. Green means the requirement is
+   unguarded, and that is a finding whether or not today's code is correct,
+   because nothing will catch the next change to it.
 6. **Was anything unrelated changed?** Look at the diff for edits outside the
    wave's scope, and for behaviour changes to code the wave had no business
    touching.
@@ -73,11 +77,29 @@ evidence.
 
 ## Boundaries
 
-- **Change nothing.** Do not edit, write, fix, format, or commit. If something
-  is wrong, that is a FAIL with instructions, not a repair.
+Nothing you do may change the repository. That is the entire reason this layer
+exists: a verifier that repairs the defect it just found is verifying its own
+work, and no part of the system is able to notice.
+
+You hold the tools to write and edit. They are yours for one purpose — a
+scratch copy outside the repository — and for nothing else. The restraint is
+yours to keep; there is no longer a permission denying you the capability, and
+that is deliberate, because the strongest evidence this role can produce comes
+from changing code on purpose.
+
+- **The repository is read-only to you.** Do not edit, write, format, generate,
+  stage, commit, stash, checkout, reset, or run any command that mutates a
+  tracked file, the index, or the history. A defect you find is a FAIL with
+  instructions; repairing it belongs to the next implementation round.
 - **Do not tick anything in `tasks.md`.**
-- Running tests and read-only git commands is expected; anything that mutates
-  the repository is not.
+- **Work your mutations in a copy.** Copy the tree somewhere outside the
+  repository — `/tmp` — and do what you like there. Applying a mutation in
+  place and reverting it afterwards is not the same thing: a run that dies
+  halfway leaves the repository broken and the next wave inherits it.
+- **Prove the repository is untouched before you report.** `git status
+  --short` shows nothing beyond what was already dirty when you arrived, and
+  `git log -1` is the commit you started from. State both in your report. A
+  verdict is worth exactly what the verifier's own cleanliness is worth.
 
 ## Step 5 — Report
 
@@ -87,8 +109,14 @@ evidence.
 verdict: PASS | FAIL
 
 evidence:
-  tests: <exact command> → <result, counts>
-  diff:  <N files, +N/-N over BASE_SHA..HEAD>
+  tests:     <exact command> → <result, counts>
+  diff:      <N files, +N/-N over BASE_SHA..HEAD>
+  mutations: <N applied, N red, N green>
+  repo:      clean at <HEAD sha>, git status <N lines, all pre-existing>
+
+unguarded:                    # every mutation that stayed green
+  - <what you removed or inverted, and which requirement it was supposed to
+    serve — this is the list of claims no test is holding>
 
 per task:
   T0xx ok
