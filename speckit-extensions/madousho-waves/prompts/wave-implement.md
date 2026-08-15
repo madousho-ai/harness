@@ -136,28 +136,11 @@ Stage deliberately:
 
 ### The message
 
-Read the last dozen commit messages before you write your first one
-(`git log -12`), and match what you find — body length included.
-
-The subject says what the change does. **The body says why, and it is the
-default rather than the exception.** Four things belong in it:
-
-- what the situation was, and what was wrong with it
-- the mechanism — why the old shape produced that, in enough detail that a
-  reader can check you rather than take your word
-- the evidence: what you ran, measured or counted, with the numbers
-- why this shape rather than the obvious alternative, and what the change
-  absorbs or replaces
-
-This carries more weight here than in ordinary work. Waves share no
-conversation, so your reasoning reaches the next wave through the repository or
-it does not arrive. For "why is it built this way" the commit message is
-usually the only place it fits: the code shows the shape and the tests show the
-behaviour, and neither one shows what you considered and rejected.
-
-Leave the body out only when the subject is honestly the whole story — a typo,
-a version bump with no judgement in it. Anything you had to decide goes in the
-body.
+Your system prompt says what a commit message in this repository looks like.
+What a wave adds is weight: waves share no conversation, so your reasoning
+reaches the next wave through the repository or it does not arrive at all. The
+body is where "why is it built this way" fits, and the next wave has nowhere
+else to read it.
 
 Do not add `Co-Authored-By` or any generated-by trailer.
 
