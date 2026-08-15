@@ -15,6 +15,7 @@
     "wave-supervisor": {
       "description": "madousho-waves 波次主管，仅供 /speckit.implement-waves 使用：接一个波次号，跑「实现 → 验证 → 修补」直到通过或认输，自己不写代码不做验证。协议在 .specify/extensions/madousho-waves/prompts/wave-supervisor.md，由调用者指定。",
       "mode": "subagent",
+      "prompt": "{file:./agent-prompts/parts/house-rules.md}\n\n{file:./agent-prompts/parts/voice.md}\n\n{file:./agent-prompts/parts/tools.md}\n\n{file:./agent-prompts/parts/subagent.md}",
       "permission": {
         "*": "allow",
         "task": { "wave-implement": "allow", "wave-verify": "allow", "*": "deny" },
@@ -24,6 +25,7 @@
     "wave-implement": {
       "description": "madousho-waves 实现轮，仅供 /speckit.implement-waves 使用：按分配到的任务清单逐条实现，一任务一 commit。协议在 .specify/extensions/madousho-waves/prompts/wave-implement.md，由调用者指定。",
       "mode": "subagent",
+      "prompt": "{file:./agent-prompts/parts/house-rules.md}\n\n{file:./agent-prompts/parts/voice.md}\n\n{file:./agent-prompts/parts/tools.md}\n\n{file:./agent-prompts/parts/skills.md}\n\n{file:./agent-prompts/parts/git-commit.md}",
       "permission": {
         "*": "allow",
         "external_directory": "allow",
@@ -33,6 +35,7 @@
     "wave-verify": {
       "description": "madousho-waves 验证轮，仅供 /speckit.implement-waves 使用：只读，独立判定一个波次是否达标。协议在 .specify/extensions/madousho-waves/prompts/wave-verify.md，由调用者指定。",
       "mode": "subagent",
+      "prompt": "{file:./agent-prompts/parts/house-rules.md}\n\n{file:./agent-prompts/parts/voice.md}\n\n{file:./agent-prompts/parts/tools.md}\n\n{file:./agent-prompts/parts/skills.md}\n\n{file:./agent-prompts/parts/git-commit.md}",
       "permission": {
         "*": "allow",
         "external_directory": "allow",
