@@ -76,6 +76,21 @@ name**:
 }
 ```
 
+**If `task` is given the object form, the catch-all must come first.** Rules
+are evaluated in declaration order and the last match wins, so
+`{ "wave-implement": "allow", "wave-verify": "allow", "*": "deny" }` denies
+both of the agents it appears to permit — each one matches its own rule and
+then matches `*`, and `*` is last. A denied subagent is removed from the
+`task` tool description outright, so denying every candidate removes the tool
+itself, and the sub-supervisor reports having no launcher rather than having a
+restricted one. Written the other way round it behaves as intended:
+
+```jsonc
+"task": { "*": "deny", "wave-implement": "allow", "wave-verify": "allow" }
+```
+
+Check the order, not just the presence of the key.
+
 Restart after either change. Denies on your own session are inherited by
 everything below you, so a tool you have denied stays denied for all three
 layers.

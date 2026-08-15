@@ -121,13 +121,17 @@
   "description": "madousho-waves 波次主管，仅供 /speckit.implement-waves 使用：接一个波次号，派实现者与验证者，自己不写代码不做验证",
   "mode": "subagent",
   "permission": {
-    "task": { "wave-implement": "allow", "wave-verify": "allow" },
+    // 兜底必须放第一位。规则按声明顺序求值，最后一条匹配的胜出 ——
+    // 把 "*": "deny" 写在末尾，它会把前面两条 allow 一起吃掉。
+    "task": { "*": "deny", "wave-implement": "allow", "wave-verify": "allow" },
     "todowrite": "allow"
   }
 }
 ```
 
 L2 于是只派得动这两个角色，别的一个都派不动。
+
+**顺序写反的样子值得记住，因为它不像配错。** `"*": "deny"` 放在末尾时，`wave-implement` 先匹配自己那条 allow、再匹配 `*` 的 deny，末位胜出，于是两个显式放行的角色双双被拒。三个候选全 deny，而一个 deny 掉的 subagent 会从 `task` 的工具描述里整个移除 —— 移光了，工具本身就不再出现。子编排器看到的是「我没有 task 工具」，而非「我派不动那两个」，于是往环境或深度上限去找原因，找不到。
 
 ### 上一层是怎么挑中 agent 的
 

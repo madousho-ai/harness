@@ -18,7 +18,7 @@
       "prompt": "{file:./agent-prompts/parts/house-rules.md}\n\n{file:./agent-prompts/parts/voice.md}\n\n{file:./agent-prompts/parts/tools.md}",
       "permission": {
         "*": "allow",
-        "task": { "wave-implement": "allow", "wave-verify": "allow", "*": "deny" },
+        "task": { "*": "deny", "wave-implement": "allow", "wave-verify": "allow" },
         "todowrite": "allow"
       }
     },
