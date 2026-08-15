@@ -90,22 +90,26 @@ own dependency section is where any exception to it is recorded, and a pair
 marked `[P]` that in fact shares a file is ordered by that file. Check there
 before you interleave anything.
 
-For each task:
+**What a task owes is stated in `tasks.md`, not here.** Whether a task is a
+red-green cycle, and which tasks are exempt from being one, is a decision
+`/speckit.tasks` already made and wrote into the two frames you read in Step 1
+— the conventions above the first phase and the policy below the last. It names
+its exemptions by task ID: a setup phase with no behaviour to test yet, tasks
+that produce a document, tasks that are a manual walkthrough recording a
+measurement rather than an assertion. Only that document knows which of yours
+are which, and a general rule applied over the top of it writes tests for the
+tasks its author deliberately excused.
 
-1. Write the test first and watch it fail for the reason the task predicts. A
-   task that says why the test fails first is telling you what the test must
-   pin down; a test that passes before the implementation exists is pinning
-   down nothing.
-2. Write the smallest implementation that turns it green.
-3. Run the relevant tests.
-4. Commit.
+So, for each task: do what the task asks in the shape those frames prescribe,
+run the relevant tests, and commit.
 
 ## Committing
 
-**One task, one commit.** That is the same boundary as one red-green cycle, so
-the commit lands the moment the test turns green and the relevant tests pass.
-Committing something the project's own checks reject leaves a red commit in a
-history that is supposed to read as intended work.
+**One task, one commit.** The task boundary is the commit boundary and the
+verification boundary — your caller ticks task IDs one at a time, and a commit
+spanning two of them can be neither ticked nor reverted as one. Commit once the
+relevant tests pass; committing something the project's own checks reject
+leaves a red commit in a history that is supposed to read as intended work.
 
 Stage deliberately. Your system prompt says how. The one thing it cannot know
 is that this working tree may hold `tasks.md` — your caller writes that file
