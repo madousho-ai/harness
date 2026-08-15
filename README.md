@@ -84,6 +84,34 @@ specify init <project> --integration <agent>
 
 可用的 integration 名称用 `specify integration list` 查看。安装后提供 `/speckit.constitution`、`/speckit.specify`、`/speckit.plan`、`/speckit.tasks`、`/speckit.implement` 等命令。
 
+## Spec Kit 扩展
+
+### [madousho-waves](./extensions/madousho-waves/README.md)
+
+本仓库自带的 spec kit 扩展，替换实现阶段的跑法。
+
+```
+specify extension add --dev <本仓库>/extensions/madousho-waves
+```
+
+装完得到 `/speckit.implement-waves`。
+
+`/speckit.implement` 把整个 feature 跑在一个上下文里 —— 源码、工具输出、测试、失败、修复、之前的推理全都堆在同一段历史中，规模一大上下文就成了瓶颈，随之而来的是偏离计划、忘掉约束。
+
+这个扩展把实现按 `tasks.md` 的 `## Phase N:` 切成波次，**一波一个全新上下文**。主编排器只读一张波次表，把一个波整个交给子编排器；子编排器在自己的上下文里跑「实现 → 验证 → 修 → 再验证」，只回报一个结果。波次之间共享仓库、不共享对话 —— 后面的波要用到的东西必须先落进代码、测试或 spec kit 产物，否则等于不存在。
+
+波次划分不由它决定，phase 是 `/speckit.tasks` 写好的，这里只负责调度。
+
+**要多配几行。** 三层派发需要 subagent 能再开 subagent，而 opencode 有两道闸：默认只允许一层，且一个 subagent 只有在自己的定义里字面写了 `task` 才拿得到这个工具（`"*": "allow"` 不算数，它认的是键名本身）。所以除了
+
+```json
+{ "subagent_depth": 2 }
+```
+
+还要有 `wave-supervisor` / `wave-implement` / `wave-verify` 三个 subagent —— 见 [`agent.example.json`](./agent.example.json)。验证者在那里被禁掉写权限，它的独立性因此是结构性的而非只靠提示词。
+
+命令开头会把两道闸都自检一遍，缺哪道说哪道，不会悄悄退回两层假装在跑。
+
 ### 零散 skill
 
 用 [skills](https://github.com/vercel-labs/skills) CLI 安装。`-g` 装到全局（`~/.config/opencode/skills/`），去掉则装到当前项目（`.agents/skills/`）。
