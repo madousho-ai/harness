@@ -59,11 +59,11 @@ evidence.
    wave's scope, and for behaviour changes to code the wave had no business
    touching.
 7. **Were any project-wide rules broken?** Constitution principles, existing
-   guard tests, commit hygiene: one task per commit, nothing staged that the
-   wave did not touch, no generated-by trailers, and a message body that
-   carries the reasoning in the shape this repository already uses. Compare
-   against the commits before `BASE_SHA` — subject-only commits in a history
-   that explains itself have discarded the account of why.
+   guard tests, and commit hygiene against the standard your own prompt
+   carries — one task per commit above all, since that is the boundary the
+   caller ticks and reverts by. Compare against the commits before `BASE_SHA`:
+   a subject-only commit in a history that explains itself has discarded the
+   account of why.
 8. **Does it serve the story, or only the sentence?** A wave can satisfy every
    requirement it cites and still leave the user story those requirements exist
    for no better off, or make a later story unreachable. Failing a wave here

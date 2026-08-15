@@ -75,18 +75,6 @@ repository as it stands right now:
 Read the current repository rather than trusting any description of it. Earlier
 waves have already changed it.
 
-To understand code you did not write, prefer a code-intelligence tool over a
-grep-and-read loop when the workspace has one. A graph or semantic index
-answers "how does this work" and "what does changing this touch" in one call;
-a structural matcher (`ast-grep`) finds a syntax shape across a whole tree.
-Grep plus read takes dozens of round trips to reach the same answer and fills
-your context with the files that turned out not to matter. Read a file directly
-when you already know which file and roughly where.
-
-Before you change anything, know its call chain and what depends on it.
-Discovering after the edit that you broke a caller costs more than looking it
-up beforehand would have.
-
 You see the whole destination and only your own leg of the route. Reading every
 story costs little and stops the common failure: a task carried out to the
 letter that quietly defeats the story it was written to serve, or a foundation
@@ -112,11 +100,6 @@ For each task:
 3. Run the relevant tests.
 4. Commit.
 
-Creating a file: check first that it does not already exist, and switch to an
-edit if it does. This workspace has concurrent writers — the operator and other
-sessions may be working in the same tree — and overwriting what someone else
-just wrote is harder to recover from than a missed write.
-
 ## Committing
 
 **One task, one commit.** That is the same boundary as one red-green cycle, so
@@ -124,15 +107,9 @@ the commit lands the moment the test turns green and the relevant tests pass.
 Committing something the project's own checks reject leaves a red commit in a
 history that is supposed to read as intended work.
 
-Stage deliberately:
-
-- Inspect `git status --short` first and stage only the files you touched.
-- Never `git add -A` or `git add .`. The working tree may hold changes that are
-  not yours — including `tasks.md`, which your caller writes and you must not.
-- One file holding parts of two tasks: pick the hunks with `git add -p`, or
-  export the diff, split it, and `git apply --cached` the part that belongs to
-  this commit. The working tree keeps the whole change; the index carries only
-  what this commit is about.
+Stage deliberately. Your system prompt says how. The one thing it cannot know
+is that this working tree may hold `tasks.md` — your caller writes that file
+and you must never stage it.
 
 ### The message
 
@@ -141,11 +118,6 @@ What a wave adds is weight: waves share no conversation, so your reasoning
 reaches the next wave through the repository or it does not arrive at all. The
 body is where "why is it built this way" fits, and the next wave has nowhere
 else to read it.
-
-Do not add `Co-Authored-By` or any generated-by trailer.
-
-Splitting at the end does not work. By then the two changes are interleaved in
-the same file and there is nothing left to separate them by.
 
 ## Boundaries
 
