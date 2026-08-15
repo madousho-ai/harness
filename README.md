@@ -28,7 +28,7 @@
 "prompt": "{file:./agent-prompts/parts/house-rules.md}\n\n{file:./agent-prompts/parts/voice.md}\n\n…\n\n{file:./agent-prompts/quill.md}"
 ```
 
-拼哪几块由角色决定，完整拼法见 [agent.example.json](./agent.example.json)。
+拼哪几块由角色决定，完整拼法见 [agent.example.json](./agent.example.json)。madousho-waves 的三个 subagent 也拼自这批组件，各取所需 —— 它们没有用户可问，就不拿 `concerns.md`。
 
 `{file:}` 的路径相对 config 文件所在目录，一个 prompt 里可以拼多个文件。markdown 形式的 agent（`.opencode/agent/<name>.md`）做不到这件事 —— 它的 body 不做插值，`{file:...}` 会原样留在提示词里。所以要共享组件，agent 只能用 JSON 形式定义。
 
@@ -122,6 +122,10 @@ specify extension add --dev <本仓库>/speckit-extensions/madousho-waves
 ```
 
 还要有 `wave-supervisor` / `wave-implement` / `wave-verify` 三个 subagent —— 见 [`agent.example.json`](./agent.example.json)。验证者在那里被禁掉写权限，它的独立性因此是结构性的而非只靠提示词。
+
+**扩展只装流程，规矩走 agent 提示词。** 扩展里那三份协议写的是波次怎么调度、报告长什么样、越过哪条线波次作废。怎么提交、先想到哪个工具、什么时候加载 skill，由那三个 subagent 的 `prompt` 提供，跟 quill、scroll 拼自同一批 [`parts/`](./agent-prompts/) 组件。扩展装进任意项目的 `.specify/` 下，够不到这个仓库的文件，写进扩展就只能是第二份副本 —— 那是它以前的样子，而副本会漂移。
+
+代价是这个扩展不再自足：装了扩展、跳过那三个 agent 定义的话，实现者拿到流程，拿不到规矩。
 
 命令开头会把两道闸都自检一遍，缺哪道说哪道，不会悄悄退回两层假装在跑。
 

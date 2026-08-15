@@ -67,18 +67,22 @@
 
 ## 三层 agent 怎么组织
 
-分工原则一句话：**agent 定义带能力，扩展文件带协议。**
+分工原则一句话：**扩展带协议，agent 定义带能力与项目规矩。**
 
-这条线是被约束逼出来的。扩展装不了 agent 定义 —— 那属于 opencode 配置，不在 `.specify/` 下，与 `subagent_depth` 是同一个限制。所以协议必须住在扩展里才能随扩展分发；而能力只有配置给得了。沿这条线切，两边各自只装自己装得下的东西。
+这条线是被约束逼出来的。扩展装不了 agent 定义 —— 那属于 opencode 配置，不在 `.specify/` 下，与 `subagent_depth` 是同一个限制。所以协议必须住在扩展里才能随扩展分发；而能力只有配置给得了。
+
+第三样东西是项目自己的规矩：怎么提交、先想到哪个工具、什么时候加载 skill、怎么讲代码。它跟波次无关，换个项目就换一套，也只有配置这一侧够得着 —— 扩展装进任意项目的 `.specify/` 下，引不到那个项目提示词库里的文件。写进扩展就成了第二份副本，而副本会漂移。
 
 | 层 | agent | 定义里放什么 | 协议在哪 |
 | --- | --- | --- | --- |
 | L1 主编排器 | 你自己的 primary agent | 无需改动 | `commands/implement.md` |
-| L2 子编排器 | `wave-supervisor` | 授予 `task` | `prompts/wave-supervisor.md` |
-| L3 实现者 | `wave-implement` | 写权限（与默认相同） | `prompts/wave-implement.md` |
-| L3 验证者 | `wave-verify` | **禁写** | `prompts/wave-verify.md` |
+| L2 子编排器 | `wave-supervisor` | 授予 `task`，拼项目规矩 | `prompts/wave-supervisor.md` |
+| L3 实现者 | `wave-implement` | 写权限（与默认相同），拼项目规矩 | `prompts/wave-implement.md` |
+| L3 验证者 | `wave-verify` | **禁写**，拼项目规矩 | `prompts/wave-verify.md` |
 
-四个 agent 定义都不写 `prompt` 字段。角色协议整份住在扩展的 `prompts/` 下，调用者在派人时把文件路径递过去。写进 agent 定义会让扩展只发得出半份协议 —— 装的人拿到一堆命令却没有行为规范。
+角色协议整份住在扩展的 `prompts/` 下，调用者在派人时把文件路径递过去。把协议搬进 agent 定义会让扩展只发得出半份 —— 装的人拿到一堆命令却没有行为规范。
+
+反过来，三个 agent 定义的 `prompt` 字段装的全是项目规矩，一条波次协议都不装。这个仓库用 [`agent-prompts/parts/`](../../agent-prompts/) 拼，别的项目照自己的来。代价是扩展不自足：只装扩展、不给这三个 agent 配 `prompt` 的话，实现者拿到的是流程，没有规矩，而协议里那些「你的系统提示词说了怎么做」就落空了。
 
 `description` 是要认真写的字段：它是上一层挑人时唯一的判据（见下一节）。
 
