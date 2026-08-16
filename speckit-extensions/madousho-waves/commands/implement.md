@@ -106,7 +106,38 @@ written and you are the only writer:
 python3 .specify/extensions/madousho-waves/scripts/python/waves.py complete <WAVE_ID> T0xx T0xx ...
 ```
 
-Use the task IDs from the result. Then go back to Step 1 for the next wave.
+Use the task IDs from the result. Then commit that file, on its own, before
+you open the next wave:
+
+```bash
+git status --short
+git add specs/<feature>/tasks.md   # the tasks: path Step 0 printed
+git commit
+```
+
+Those checkboxes are the feature's completion state and the only durable copy
+of it. Every later session rebuilds progress by reading them, and
+`.specify/waves/<feature>.json` holds none of it — that file is per-checkout
+and git-ignored. A tick nobody commits survives until the next time someone
+checks the tree out, and no longer.
+
+Commit before Step 1, because `start` takes the next wave's `base_sha` from
+`HEAD`. A tick committed after that falls inside the next wave's
+`BASE_SHA..HEAD` range, where its verifier reads it as a change the
+implementer made that no task called for.
+
+`git status --short` should show that one path and nothing else: the
+implementer commits its own work task by task and may never stage `tasks.md`.
+Stage by name — `git add -A` in a tree that may hold somebody else's edits
+commits unrelated work under a wave's name. Anything else standing there is
+work no verifier has seen; name those paths in your completion report and
+leave them alone.
+
+The subject names the wave and what it closed. The body carries what a
+checkbox cannot: the task IDs, the rounds it took, and the verifier's verdict.
+That is the record of why those boxes may be ticked at all.
+
+Then go back to Step 1 for the next wave.
 
 **BLOCKED** — the run stops here. `report` already recorded the halt; do not
 start a later wave. A blocked wave means the canonical state is not what
@@ -149,8 +180,9 @@ A failure here is a finding for the user, not something to fix silently.
 
 ## Rules
 
-1. You own `tasks.md` completion state; only `waves.py complete` writes it, and
-   only after a result exists.
+1. You own `tasks.md` completion state; only `waves.py complete` writes it,
+   only after a result exists, and you commit every tick — that file alone —
+   before the next wave opens.
 2. One wave, one fresh sub-supervisor. Never reuse a context across waves.
 3. You never run a wave's loop yourself, however small the wave looks.
 4. Ceilings and refusals belong to the script. Do not reason past an exit code 2.
