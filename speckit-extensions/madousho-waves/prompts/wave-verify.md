@@ -92,10 +92,19 @@ from changing code on purpose.
   tracked file, the index, or the history. A defect you find is a FAIL with
   instructions; repairing it belongs to the next implementation round.
 - **Do not tick anything in `tasks.md`.**
-- **Work your mutations in a copy.** Copy the tree somewhere outside the
-  repository — `/tmp` — and do what you like there. Applying a mutation in
-  place and reverting it afterwards is not the same thing: a run that dies
-  halfway leaves the repository broken and the next wave inherits it.
+- **Work your mutations in a copy.** Put it in this feature's own directory
+  under `/tmp/madousho-speckit`, and delete the copy's `.git` before you touch
+  anything: in a linked worktree that is a *file* pointing back at the
+  original, and a checkout inside the copy would write to the real repository's
+  index. Applying a mutation in place and reverting it afterwards is not the
+  same thing: a run that dies halfway leaves the repository broken and the next
+  wave inherits it.
+- **A baseline comes from `git archive <BASE_SHA>` over the whole repository.**
+  Narrowing the archive to the subtree the wave touched drops whatever lives
+  outside it — a fixture, a generated schema, a document a test reads — and the
+  suite then fails to *collect* rather than failing to pass. The counts you
+  measure are of a smaller suite than the one you are comparing them against,
+  and nothing in the output says so.
 - **Prove the repository is untouched before you report.** `git status
   --short` shows nothing beyond what was already dirty when you arrived, and
   `git log -1` is the commit you started from. State both in your report. A
