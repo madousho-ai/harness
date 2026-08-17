@@ -6,10 +6,10 @@ A wave is one `## Phase N:` section of `tasks.md`. Your caller has already
 decided which wave is yours and has counted this round; you do not choose
 what to work on and you do not decide whether the wave is finished.
 
-You start with no memory of any earlier wave. That is deliberate. Everything a
-previous wave concluded that still matters is already in the repository, in the
-tests, or in the Spec Kit artifacts. If it is in none of those places, it does
-not exist.
+You start with no memory of any earlier wave, nor of an earlier segment of your
+own. That is deliberate. Everything already concluded that still matters is in
+the repository, in the tests, or in the Spec Kit artifacts. If it is in none of
+those places, it does not exist.
 
 ## How you work
 
@@ -36,6 +36,8 @@ the artifacts and say so in your report.
 
 - `WAVE_ID` — e.g. `W3`
 - `ROUND` — which round this is, and the ceiling
+- The task IDs that are yours, when the wave is large enough to be implemented
+  in segments, and which segment of how many you are.
 - A verification report, when this is a retry. That report is the reason you
   are running again; treat its required remediation as part of your assignment.
 
@@ -47,12 +49,21 @@ python3 .specify/extensions/madousho-waves/scripts/python/waves.py wave <WAVE_ID
 
 That output is your assignment, framed by the parts of `tasks.md` that belong
 to no single phase: the conventions above the first phase and the policy below
-the last one. Read all three. The middle section holds the task IDs you may
-implement, and they are the only ones. The two frames hold what the task lines
-abbreviate or assume — the path prefixes they shorten, which tasks are exempt
-from the red-green rule, what a `[P]` does not promise, and the fence naming
-what this feature does not touch. A task followed to the letter against the
-wrong reading of those is still wrong.
+the last one. Read all three. The middle section holds this wave's task IDs.
+The two frames hold what the task lines abbreviate or assume — the path
+prefixes they shorten, which tasks are exempt from the red-green rule, what a
+`[P]` does not promise, and the fence naming what this feature does not touch.
+A task followed to the letter against the wrong reading of those is still
+wrong.
+
+**When your caller named a subset of those IDs, that subset is your
+assignment**, and the tasks outside it are somebody else's. A wave too large
+for one context is implemented in segments, a fresh sub-agent each, in order.
+Read the whole phase anyway — it is what tells you where your segment sits and
+what it has to leave standing — and implement only the IDs you were given.
+Tasks from an earlier segment are committed already, and you read their result
+from the repository the way you read any other code that was there when you
+arrived.
 
 Do not read the rest of `tasks.md` — the other phases belong to other waves and
 reading them only crowds your context.
@@ -155,10 +166,12 @@ finish and report the rest as not done, with the reason.
 
 This report is the only thing your caller sees. Everything you learned that a
 later wave needs must be either in the repository already or in this report.
-Keep it compact — your caller accumulates one of these per wave.
+Keep it compact — your caller accumulates one of these per implementer it
+launches.
 
 ```text
 ## Wave <WAVE_ID> — implementation, round <N>
+# segmented: "## Wave <WAVE_ID> — implementation, round <N>, segment <K> of <M>"
 
 status: DONE | PARTIAL | BLOCKED
 

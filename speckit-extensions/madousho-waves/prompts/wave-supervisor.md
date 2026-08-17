@@ -44,9 +44,58 @@ those tasks cite, the constraints in `plan.md`, and any `contracts/` they name
 verifier's word as the only input. Do not read other phases of `tasks.md`: you
 want the whole destination and only your own leg of the route.
 
+## Segmenting a large wave
+
+One implementer takes the whole wave by default. A large phase defeats that:
+its context fills, and an implementer that runs out mid-task stops somewhere no
+task boundary describes, having done most of the work and reported some of it.
+
+**Decide before the first round.** One context carries thirteen or fourteen
+tasks. A phase within that goes to a single implementer whole. Above it, cut in
+half — twenty becomes ten and ten, twenty-seven becomes thirteen and fourteen —
+and cut in three only when the halves would still be over. Task count is the
+cheap signal; a phase that stands up a new crate, writes a dozen new files, or
+lands a test suite from nothing fills a context faster than its count suggests.
+
+**Verification stays whole.** The segments are implementation only — one
+verifier per round, over the entire `BASE_SHA..HEAD`. The wave remains the unit
+that is judged, and `base_sha` is recorded once per wave for exactly this
+reason.
+
+**All segments live inside one round.** A round is one implementation followed
+by one verification, so opening a round per segment spends the ceiling on work
+nobody has judged yet. Call `waves.py round` once, run the segments in order,
+and go to (c) when the last one reports.
+
+**Cut where the tasks do, and the first segment has to stand on its own.**
+Halfway is where you start looking; the boundary then lands on the nearest edge
+between the groups the task list describes. A phase spanning several crates
+usually names them in sub-headings, and those headings are the cut — aim for a
+segment you can name in one sentence.
+
+Then check that boundary rather than assuming it. The task list is written in
+dependency order and states its ordering constraints outright, so each of those
+should point forward across your cut; one pointing back means the halves are
+the wrong way round. The binding check is greenness: the first segment's tests
+have to pass with nothing from the second one present. A cut that leaves a test
+waiting on a later task ends the segment with the suite red, and the next
+segment inherits a repository it cannot tell apart from a broken one.
+
+**Each segment is a fresh sub-agent** and inherits nothing but the repository.
+Beyond the usual brief it needs the task IDs that are its own and which segment
+of how many it is. Carry forward what the earlier segments assumed or deviated
+on: those reports are in your context and in no one else's, and a decision
+segment 1 made that segment 2 must respect reaches it through you or through a
+commit body.
+
+**A retry round need not be segmented.** Remediation is usually a fraction of
+the wave and one fresh context carries it. Segment a retry when the remediation
+is itself large.
+
 ## Step 2 — Round by round
 
-Each round is one implementation followed by one verification. Repeat until it
+Each round is one implementation — a single sub-agent, or a few in sequence
+when the wave is segmented — followed by one verification. Repeat until it
 passes or you run out.
 
 **a. Open the round.**
@@ -67,8 +116,11 @@ precisely so that it is not a matter of judgement.
 - On round 2 and later: the previous verification report verbatim, plus your
   own analysis of what to change. Do not re-describe the wave — it fetches its
   own assignment.
+- When the wave is segmented: the task IDs of its segment, which segment of how
+  many it is, and what the segments before it assumed or deviated on.
 
-Wait for its report.
+Wait for its report. Segmented, launch the next segment and wait again, until
+the last one has reported.
 
 **c. Launch the verifier.** A second fresh sub-agent, unrelated to the first.
 Give it:
@@ -76,7 +128,9 @@ Give it:
 - Its instructions: read
   `.specify/extensions/madousho-waves/prompts/wave-verify.md` and follow it.
 - `WAVE_ID` and `BASE_SHA`.
-- The implementer's report, as claims to check.
+- The implementer's report, as claims to check. Segmented, all of the reports
+  in order, and a line saying the wave was implemented in that many segments —
+  the diff it judges is the same diff either way.
 
 Never verify the wave yourself. You have the implementation report in your
 context, which is exactly the contamination a separate verifier avoids. Never
