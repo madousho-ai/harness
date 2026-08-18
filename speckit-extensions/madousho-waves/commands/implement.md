@@ -153,21 +153,13 @@ Record it and stop:
 python3 .specify/extensions/madousho-waves/scripts/python/waves.py block <WAVE_ID> --reason "ABANDONED: sub-supervisor returned without reporting"
 ```
 
-## Step 4 — Global verification
+## Step 4 — Report the run as done
 
-Reaching here means every wave passed on its own. Cross-wave problems are
-invisible at those boundaries, so check the feature as a whole:
+Every wave passed on its own. Write the completion report and stop.
 
-1. Run the project's full test suite, not just the parts a wave touched.
-2. Run lint and build in the configurations `plan.md` names — feature flags,
-   alternate backends, release profile.
-3. Walk `spec.md` requirement by requirement and say where each is satisfied
-   now. Anything you cannot point at is a finding.
-4. Run `quickstart.md` end to end if it exists.
-5. Confirm the git history reads as intended work: one task per commit, nothing
-   committed that no task called for.
-
-A failure here is a finding for the user, not something to fix silently.
+Run nothing — no test suite, no lint, no build, no `quickstart.md` walk. Each
+wave was verified in a context that could read what it was judging; yours holds
+a wave table.
 
 ## Completion report
 
@@ -175,7 +167,6 @@ A failure here is a finding for the user, not something to fix silently.
 - Per wave: rounds taken, tasks completed.
 - Every assumption and concern the sub-supervisors surfaced, collected in one
   place. These are the things the artifacts did not decide and an agent did.
-- Global verification results.
 - What remains open.
 
 ## Rules
@@ -189,3 +180,5 @@ A failure here is a finding for the user, not something to fix silently.
 5. Never edit `spec.md` or `plan.md`. They record decisions a person made.
 6. A blocked wave halts the run.
 7. Carry results between waves, never transcripts.
+8. You run no tests, no lint and no build, at any point including the end. A
+   wave's evidence is gathered by the verifier that can read what it is judging.
