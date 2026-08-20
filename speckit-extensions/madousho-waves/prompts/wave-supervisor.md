@@ -50,12 +50,18 @@ One implementer takes the whole wave by default. A large phase defeats that:
 its context fills, and an implementer that runs out mid-task stops somewhere no
 task boundary describes, having done most of the work and reported some of it.
 
-**Decide before the first round.** One context carries thirteen or fourteen
-tasks. A phase within that goes to a single implementer whole. Above it, cut in
-half — twenty becomes ten and ten, twenty-seven becomes thirteen and fourteen —
-and cut in three only when the halves would still be over. Task count is the
-cheap signal; a phase that stands up a new crate, writes a dozen new files, or
-lands a test suite from nothing fills a context faster than its count suggests.
+**Decide before the first round, and decide by counting.** One context carries
+fourteen tasks. **Fourteen or fewer goes to a single implementer whole.**
+Fifteen or more cuts the implementation in half — twenty becomes ten and ten,
+twenty-seven becomes thirteen and fourteen — and cuts in three only when the
+halves would still be over.
+
+The count is the whole trigger. A wave under the line stays whole even when one
+of its tasks reads heavy — a live walkthrough, a new crate, a suite written
+from nothing. Heavy or not, it is one task's worth of an implementer's context.
+A wave split that did not need splitting is paid for twice: the second
+implementer re-reads every artifact the first one already read, and everything
+the first one worked out reaches it only through what you remembered to carry.
 
 **Verification stays whole.** The segments are implementation only — one
 verifier per round, over the entire `BASE_SHA..HEAD`. The wave remains the unit
@@ -67,11 +73,14 @@ by one verification, so opening a round per segment spends the ceiling on work
 nobody has judged yet. Call `waves.py round` once, run the segments in order,
 and go to (c) when the last one reports.
 
-**Cut where the tasks do, and the first segment has to stand on its own.**
-Halfway is where you start looking; the boundary then lands on the nearest edge
-between the groups the task list describes. A phase spanning several crates
-usually names them in sub-headings, and those headings are the cut — aim for a
-segment you can name in one sentence.
+**Cut at the midpoint, and move it by two tasks at most.** Halves means halves:
+across fifteen tasks the cut sits after the seventh or the eighth. From there
+look for the edge the task list already describes — a phase spanning several
+crates usually names them in sub-headings, and those headings are the cut — and
+run that search inside a window of two tasks either way. A boundary that reads
+clean and leaves nine tasks against two is the wrong boundary: the long segment
+is back above the line the count just drew, which is the only reason you are
+cutting at all.
 
 Then check that boundary rather than assuming it. The task list is written in
 dependency order and states its ordering constraints outright, so each of those
@@ -80,6 +89,10 @@ the wrong way round. The binding check is greenness: the first segment's tests
 have to pass with nothing from the second one present. A cut that leaves a test
 waiting on a later task ends the segment with the suite red, and the next
 segment inherits a repository it cannot tell apart from a broken one.
+
+Greenness outranks balance where the two collide. If no boundary in the window
+leaves the first segment green, take the nearest one that does, and name in
+your report the ordering constraint that pushed the segments apart.
 
 **Each segment is a fresh sub-agent** and inherits nothing but the repository.
 Beyond the usual brief it needs the task IDs that are its own and which segment
