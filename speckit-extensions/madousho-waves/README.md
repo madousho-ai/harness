@@ -219,6 +219,8 @@ python3 .specify/extensions/madousho-waves/scripts/python/waves.py unblock W3 --
 
 **代码由实现者提交。** 一任务一 commit，节奏是「测试先红 → 最小实现转绿 → 跑测试 → 提交」。只 stage 自己碰过的文件，提交前先看 `git status --short`，禁 `git add -A` 与 `git add .`（工作树里可能有不属于它的改动），禁 `Co-Authored-By` 与任何生成标记。
 
+测试深度到那里为止。变异、为了引一个数字去扫全量套件、为了证明某条测试真的咬人而另起一份副本，全部归验证轮：那些结论无论如何都会在没有实现者参与的情况下再得一次，而在实现轮花掉的是它剩下那些任务的上下文。
+
 **`tasks.md` 由主编排器提交。** 唯一的写者是它，且只在拿到验证过的结果之后调 `waves.py complete`。勾一个任务是一句「有独立验证者同意过」的声明，任何人都无法对自己作出这个声明。勾完当场提交，一波一个 commit，只 stage `tasks.md` 这一个路径，赶在下一波 `start` 之前 —— `start` 从 `HEAD` 取下一波的 `base_sha`，晚提交的勾会落进下一波的 diff，被那一波的验证者读成实现者多做的改动。
 
 checkbox 是完成状态的唯一持久副本，不提交就只能活到下次 checkout。附带的好处是每波交界处工作树干净，验证者那句「`git status` 除了我到场时就脏的以外什么都没有」才有力度。

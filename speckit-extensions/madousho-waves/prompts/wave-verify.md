@@ -58,7 +58,10 @@ evidence.
    of this wave's central claims, delete or invert the thing it claims to
    guard, and watch. Red means the test holds. Green means the requirement is
    unguarded, and that is a finding whether or not today's code is correct,
-   because nothing will catch the next change to it.
+   because nothing will catch the next change to it. This depth is yours alone:
+   the implementer is asked for the red-green cycle and a green suite around
+   its change, and for nothing past that. Skipped here, it is skipped for the
+   whole wave.
 6. **Was anything unrelated changed?** Look at the diff for edits outside the
    wave's scope, and for behaviour changes to code the wave had no business
    touching.

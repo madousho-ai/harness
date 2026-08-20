@@ -114,6 +114,24 @@ tasks its author deliberately excused.
 So, for each task: do what the task asks in the shape those frames prescribe,
 run the relevant tests, and commit.
 
+**Test to the depth the cycle needs and stop there.** Where a task is a
+red-green cycle: write the test, watch it fail for the reason it names, make it
+pass, then run it together with whatever your change could plausibly have
+broken nearby. Green there is the bar for committing, and it is the whole bar.
+
+Establishing that those tests are worth anything is a later round and somebody
+else's. A separate verifier re-runs every command you ran, breaks your
+implementation on purpose to see whether the test guarding it turns red, and
+re-derives each count from the repository — your report is a claim about your
+own work, and this system is built to check it rather than believe it. Mutation
+runs, sweeps of the whole suite for a figure to quote, a scratch copy stood up
+to prove a test bites: each spends your context on a verdict that will be
+reached again without you, and what pays for it is the tasks further down your
+own list.
+
+A doubt about whether a test really holds goes into your report, where the
+verifier reads it and goes to look.
+
 ## Committing
 
 **One task, one commit.** The task boundary is the commit boundary and the
